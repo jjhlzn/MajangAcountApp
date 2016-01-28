@@ -25,6 +25,7 @@
 		1C9973151C55B64000D60799 /* Round.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9973131C55B64000D60799 /* Round.swift */; };
 		1C9973171C55BABA00D60799 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9973161C55BABA00D60799 /* CoreDataStack.swift */; };
 		1C9973191C55BF8600D60799 /* GameStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9973181C55BF8600D60799 /* GameStore.swift */; };
+		1C99731B1C58860300D60799 /* GameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C99731A1C58860300D60799 /* GameCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,6 +70,7 @@
 		1C9973131C55B64000D60799 /* Round.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Round.swift; sourceTree = "<group>"; };
 		1C9973161C55BABA00D60799 /* CoreDataStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		1C9973181C55BF8600D60799 /* GameStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameStore.swift; sourceTree = "<group>"; };
+		1C99731A1C58860300D60799 /* GameCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -136,6 +138,7 @@
 				1C9973131C55B64000D60799 /* Round.swift */,
 				1C9973161C55BABA00D60799 /* CoreDataStack.swift */,
 				1C9973181C55BF8600D60799 /* GameStore.swift */,
+				1C99731A1C58860300D60799 /* GameCell.swift */,
 			);
 			path = MajangAcountApp;
 			sourceTree = "<group>";
@@ -303,6 +306,7 @@
 				1C9973101C55B62600D60799 /* Game+CoreDataProperties.swift in Sources */,
 				1C99730D1C55AA3D00D60799 /* MajangAcountApp.xcdatamodeld in Sources */,
 				1C2359FB1C3E5ABF006724C9 /* GameDetailTVC.swift in Sources */,
+				1C99731B1C58860300D60799 /* GameCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

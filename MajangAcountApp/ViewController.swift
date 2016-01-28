@@ -13,12 +13,11 @@ protocol AddGameDelegate {
     func finishAddGame(controller : NewGameController, game : Game)
 }
 
-class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, AddGameDelegate {
+class ViewController: UITableViewController, AddGameDelegate {
 
-    @IBOutlet weak var tableView: UITableView!
     var gameStore: GameStore!
     
-    var games : [Game] = []
+    var games : [Game]!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,31 +39,34 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         // Dispose of any resources that can be recreated.
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
         return games.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
     {
-        let cell = UITableViewCell(style:UITableViewCellStyle.Default, reuseIdentifier: "Cell")
+        let cell = tableView.dequeueReusableCellWithIdentifier("gameCell") as! GameCell
         
         let game = games[indexPath.row]
-        cell.textLabel?.text = game.allPlayerDesc()
-        cell.textLabel?.font = UIFont.systemFontOfSize(14)
-        print(game.allPlayerDesc())
+        cell.titleLabel.text = game.allPlayerDesc()
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        cell.createTimeLabel.text = dateFormatter.stringFromDate(game.createTime)
         return cell
     }
     
-    func tableView(tableView : UITableView, didSelectRowAtIndexPath indexPath : NSIndexPath) {
+    /*
+    override func tableView(tableView : UITableView, didSelectRowAtIndexPath indexPath : NSIndexPath) {
+        print(indexPath.row.value)
         performSegueWithIdentifier("gameSegue", sender: indexPath.row)
-    }
+    }*/
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
         if segue.identifier == "gameSegue" {
             let destination : GameDetailTVC? = segue.destinationViewController as? GameDetailTVC
-            destination?.game = games[(sender as? Int)!]
+            destination?.game = games[tableView.indexPathForSelectedRow!.row]
             destination?.gameStore = gameStore
         } else if segue.identifier == "newGameSegue" {
             let destination : NewGameController? = segue.destinationViewController as? NewGameController
@@ -86,5 +88,30 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         controller.dismissViewControllerAnimated(true, completion: nil)
     }
 
+    @IBAction func toggleEdit(sender: UIBarButtonItem) {
+        if editing {
+            sender.title = "编辑"
+            setEditing(false, animated: true)
+        } else {
+            sender.title = "完成"
+            setEditing(true, animated: true)
+            
+        }
+    }
+    
+    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        if editingStyle == .Delete {
+            let game = games[indexPath.row]
+            do {
+                try gameStore.removeGame(game)
+                games.removeAtIndex(indexPath.row)
+                tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+            }
+            catch let error {
+                print("Core Data Stack save failed: \(error)")
+            }
+            
+        }
+    }
 }
 

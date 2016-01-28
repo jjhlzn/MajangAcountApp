@@ -37,4 +37,24 @@ class GameStore {
         
         return games
     }
+    
+    func removeGame(game: Game) throws {
+        let context = coreDataStack.mainQueueContext
+        var deleteError : ErrorType?
+        context.performBlockAndWait() {
+            do {
+                context.deleteObject(game)
+                try self.coreDataStack.saveChanges()
+            }
+            catch let error {
+                deleteError = error
+            }
+        }
+        
+        if deleteError != nil {
+            throw deleteError!
+        }
+    }
+    
+    
 }
