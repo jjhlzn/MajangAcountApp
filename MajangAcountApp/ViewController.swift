@@ -21,9 +21,11 @@ class ViewController: UITableViewController, AddGameDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         //加载Games
         games = try! gameStore.fetchAllGames(predicate: nil, sortDescriptors: [NSSortDescriptor(key: "createTime", ascending: false)])
+        
+        tableView.allowsMultipleSelectionDuringEditing = false
         
     }
     
@@ -88,16 +90,6 @@ class ViewController: UITableViewController, AddGameDelegate {
         controller.dismissViewControllerAnimated(true, completion: nil)
     }
 
-    @IBAction func toggleEdit(sender: UIBarButtonItem) {
-        if editing {
-            sender.title = "编辑"
-            setEditing(false, animated: true)
-        } else {
-            sender.title = "完成"
-            setEditing(true, animated: true)
-            
-        }
-    }
     
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == .Delete {
@@ -112,6 +104,10 @@ class ViewController: UITableViewController, AddGameDelegate {
             }
             
         }
+    }
+    
+    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        return true
     }
 }
 
